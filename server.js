@@ -30,12 +30,13 @@ const app = express();
 app.use(helmet());
 app.use(compression());
 app.use(express.json());
-app.use('/', routes)
-
 app.use((req, res, next) => {
   res.header({"Access-Control-Allow-Origin": "*"});
   next();
 }) 
+app.use('/', routes)
+
+
 app.route("/").get(function (req, res) {
   res.sendFile(process.cwd() + "/index.html");
 });
