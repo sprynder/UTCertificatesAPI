@@ -5,20 +5,20 @@ const MongoClient = require('mongodb').MongoClient;
 
 
 const allMinors = async (req, res) => {
-    const client =await MongoClient.connect(process.env.MONGODB_URI, function(err, dbo) {
+    const client =await  MongoClient.connect(process.env.MONGODB_URI, function(err, dbo) {
         var db =  dbo.db('minor-database')
         //db.listCollections().toArray().then(cols => console.log("Collections", cols))
         var cursor =  db.collection('minor-collection').find();
         cursor.toArray().then(cols => res.send(JSON.stringify(cols)));
     });
-    client.close();
+    MongoClient.close();
 }
 
 const byName = async (req, res ) => {
     let school = req.params.name;
     let minors = [];
     console.log(school);
-    const client = await MongoClient.connect(process.env.MONGODB_URI, async function(err, dbo) {
+    await MongoClient.connect(process.env.MONGODB_URI, async function(err, dbo) {
         var db =  await dbo.db('minor-database')
         //db.listCollections().toArray().then(cols => console.log("Collections", cols))
         var cursor = await db.collection('minor-collection').find();
@@ -27,7 +27,7 @@ const byName = async (req, res ) => {
         res.send(JSON.stringify(schoolArr));
         });
     });
-    client.close();
+    MongoClient.close();
     //await console.log(minors);
 }
 
