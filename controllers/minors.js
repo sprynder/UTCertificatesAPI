@@ -10,8 +10,8 @@ const allMinors = async (req, res) => {
         //db.listCollections().toArray().then(cols => console.log("Collections", cols))
         var cursor =  db.collection('minor-collection').find();
         cursor.toArray().then(cols => res.send(JSON.stringify(cols)));
+        dbo.close();
     });
-    MongoClient.close();
 }
 
 const byName = async (req, res ) => {
@@ -26,8 +26,9 @@ const byName = async (req, res ) => {
         schoolArr = minors[0][school];
         res.send(JSON.stringify(schoolArr));
         });
+        dbo.close();
     });
-    MongoClient.close();
+
     //await console.log(minors);
 }
 
